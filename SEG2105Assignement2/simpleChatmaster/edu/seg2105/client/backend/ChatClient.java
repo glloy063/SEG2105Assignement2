@@ -5,6 +5,7 @@
 package edu.seg2105.client.backend;
 
 import ocsf.client.*;
+import ocsf.server.ConnectionToClient;
 
 import java.io.*;
 
@@ -49,7 +50,19 @@ public class ChatClient extends AbstractClient
 
   
   //Instance methods ************************************************
-    
+// Overridding methods foud in abstract client
+protected void connectionClosed() {
+    System.out.println("The connection closed by server.");
+    System.exit(0);
+}
+
+
+protected void connectionException(Exception exception) {
+    System.out.println("The server has shut down unexpectedly.");
+    System.exit(0);
+}
+
+  
   /**
    * This method handles all data that comes in from the server.
    *
