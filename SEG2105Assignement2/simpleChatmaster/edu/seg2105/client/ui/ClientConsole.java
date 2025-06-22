@@ -117,16 +117,21 @@ public class ClientConsole implements ChatIF
    */
   public static void main(String[] args) 
   {
-    String host = "";
+    String loginId = null;
+    String host = "localhost";
+    int port = DEFAULT_PORT;
 
 
-    try
-    {
-      host = args[0];
+    try {
+        loginId = args[0]; 
+    } catch (Exception e) {
+        System.out.println("Usage: java ClientConsole <loginId> [host] [port]");
+        System.exit(1);
     }
-    catch(ArrayIndexOutOfBoundsException e)
-    {
-      host = "localhost";
+
+    if (loginId == null || loginId.trim().isEmpty()) {
+        System.out.println("ERROR: No login ID specified. Connection ended.");
+        System.exit(1);
     }
     ClientConsole chat= new ClientConsole(host, DEFAULT_PORT);
     chat.accept();  //Wait for console data
