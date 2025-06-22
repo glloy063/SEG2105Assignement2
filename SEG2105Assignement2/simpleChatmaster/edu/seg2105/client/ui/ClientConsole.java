@@ -50,7 +50,7 @@ public class ClientConsole implements ChatIF
    * @param host The host to connect to.
    * @param port The port to connect on.
    */
-  public ClientConsole(String host, int port) 
+  public ClientConsole(String loginID,String host, int port) 
   {
     try 
     {
@@ -133,7 +133,7 @@ public class ClientConsole implements ChatIF
         System.out.println("ERROR: No login ID specified. Connection ended.");
         System.exit(1);
     }
-    ClientConsole chat= new ClientConsole(host, DEFAULT_PORT);
+    ClientConsole chat= new ClientConsole(loginId, host, port);
     chat.accept();  //Wait for console data
   }
 }
