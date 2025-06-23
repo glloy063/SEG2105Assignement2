@@ -54,6 +54,7 @@ public class ChatClient extends AbstractClient
         clientUI.display("Failed to connect to server.");
         System.exit(1);
     }
+      sendToServer("#login " + loginId);
 }
 
 protected void connectionEstablished() {
