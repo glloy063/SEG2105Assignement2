@@ -125,7 +125,7 @@ public class ClientConsole implements ChatIF
             client.closeConnection();
           } catch (IOException e) {
             System.out.println("Error disconnecting from server: " + e.getMessage());
-        }
+          }
     break;
 
         case "#sethost":
