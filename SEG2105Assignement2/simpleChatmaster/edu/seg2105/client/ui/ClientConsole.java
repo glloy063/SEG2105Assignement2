@@ -102,11 +102,12 @@ public class ClientConsole implements ChatIF
           handleCommand(message);
       } else {
          try {
-              client.handleMessageFromClientUI(message);
-          } catch (IOException e) {
-             System.out.println("Could not send message to server. Terminating client.");
-             quit();
-            }
+     client.handleMessageFromClientUI(message);
+      } catch (Exception e) {
+      System.out.println("Unexpected error. Terminating client.");
+      client.quit();
+}
+
       }
   }
 
@@ -120,8 +121,12 @@ public class ClientConsole implements ChatIF
             break;
 
         case "#logoff":
+          try {
             client.closeConnection();
-            break;
+          } catch (IOException e) {
+            System.out.println("Error disconnecting from server: " + e.getMessage());
+        }
+    break;
 
         case "#sethost":
             if (!client.isConnected()) {
