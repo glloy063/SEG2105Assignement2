@@ -4,6 +4,7 @@ package edu.seg2105.edu.server.backend;
 // license found at www.lloseng.com 
 
 
+import edu.seg2105.client.common.ChatIF;
 import ocsf.server.*;
 
 /**
@@ -17,6 +18,17 @@ import ocsf.server.*;
  */
 public class EchoServer extends AbstractServer 
 {
+  ChatIF serverUI;
+
+  public EchoServer(int port, ChatIF serverUI) {
+    super(port);
+    this.serverUI = serverUI;
+}
+
+
+
+
+
   //Class variables *************************************************
   
   /**
@@ -49,7 +61,8 @@ public class EchoServer extends AbstractServer
     (Object msg, ConnectionToClient client)
   {
     System.out.println("Message received: " + msg + " from " + client);
-    this.sendToAllClients(msg);
+    serverUI.display("Message received: " + msg);
+    sendToAllClients("SERVER MSG> " + msg);
   }
     
   /**
