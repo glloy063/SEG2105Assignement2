@@ -54,7 +54,7 @@ public class ClientConsole implements ChatIF
   {
     try 
     {
-      client= new ChatClient(host, port, this);
+      client= new ChatClient(loginID, host, port, this);
       
       
     } 
@@ -95,6 +95,91 @@ public class ClientConsole implements ChatIF
         ("Unexpected error while reading from console!");
     }
   }
+// Creating method to read commands starting with a #
+
+  public void handleMessageFromConsole(String message) {
+      if (message.startsWith("#")) {
+          handleCommand(message);
+      } else {
+         try {
+              client.handleMessageFromClientUI(message);
+          } catch (IOException e) {
+             System.out.println("Could not send message to server. Terminating client.");
+             quit();
+            }
+      }
+  }
+
+  private void handleCommand(String command) {
+    String[] tokens = command.split(" ");
+    String cmd = tokens[0];
+
+    switch (cmd) {
+        case "#quit":
+            client.quit();
+            break;
+
+        case "#logoff":
+            client.closeConnection();
+            break;
+
+        case "#sethost":
+            if (!client.isConnected()) {
+                if (tokens.length > 1) {
+                    client.setHost(tokens[1]);
+                    System.out.println("Host set to: " + tokens[1]);
+                } else {
+                    System.out.println("Usage: #sethost <host>");
+                }
+            } else {
+                System.out.println("Cannot set host while connected.");
+            }
+            break;
+
+        case "#setport":
+            if (!client.isConnected()) {
+                if (tokens.length > 1) {
+                    try {
+                        int port = Integer.parseInt(tokens[1]);
+                        client.setPort(port);
+                        System.out.println("Port set to: " + port);
+                    } catch (NumberFormatException e) {
+                        System.out.println("Invalid port number.");
+                    }
+                } else {
+                    System.out.println("Usage: #setport <port>");
+                }
+            } else {
+                System.out.println("Cannot set port while connected.");
+            }
+            break;
+
+        case "#login":
+            if (!client.isConnected()) {
+                try {
+                    client.openConnection();
+                } catch (IOException e) {
+                    System.out.println("Failed to connect to server.");
+                }
+            } else {
+                System.out.println("Already connected.");
+            }
+            break;
+
+        case "#gethost":
+            System.out.println("Current host: " + client.getHost());
+            break;
+
+        case "#getport":
+            System.out.println("Current port: " + client.getPort());
+            break;
+
+        default:
+            System.out.println("Unknown command: " + command);
+    }
+}
+
+
 
   /**
    * This method overrides the method in the ChatIF interface.  It

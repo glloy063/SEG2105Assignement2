@@ -11,6 +11,8 @@ import java.io.*;
 
 import edu.seg2105.client.common.*;
 
+
+
 /**
  * This class overrides some of the methods defined in the abstract
  * superclass in order to give more functionality to the client.
@@ -40,7 +42,7 @@ public class ChatClient extends AbstractClient
    * @param clientUI The interface type variable.
    */
   
-  public ChatClient(String host, int port, ChatIF clientUI) 
+  public ChatClient(String loginId, String host, int port, ChatIF clientUI) 
     throws IOException 
   {
     super(host, port); //Call the superclass constructor
